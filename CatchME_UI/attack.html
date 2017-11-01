@@ -1,0 +1,146 @@
+<head>
+    <title>CatchME - Attacks</title>
+    <meta content="width=device-width,initial-scale=1,user-scalable=0" name=viewport>
+    <link href=./main.css rel=stylesheet>
+</head>
+
+<body>
+    <nav id=nav>
+        <div class="main-header">
+            <div class="main-logo">
+                <div id="logo-img"></div>
+                CatchME
+            </div>
+            <div class="main-info">
+                <section class="left">
+                    <span>Uptime:
+                        <b id=hUptime></b>
+                    </span>
+                    <span>Chip ID:
+                        <b id=hChipid></b>
+                    </span>
+                </section>
+                <section class="left">
+                    <span>Boot Version:
+                        <b id=hBootmode></b>
+                        <b id=hBootversion></b>
+                    </span>
+                    <span>SDK Version:
+                        <b id=hSdkversion></b>
+                    </span>
+                </section>
+            </div>
+            <div class="onoffswitch">
+                <input type="checkbox" name="catchme-mode" class="onoffswitch-checkbox" id="catchme-mode">
+                <label class="onoffswitch-label" for="catchme-mode">
+                    <span class="onoffswitch-inner"></span>
+                    <span class="onoffswitch-switch"></span>
+                </label>
+            </div>
+        </div>
+        <div id=links>
+            <a href=.>Networks</a>
+            <a href=./users>Users</a>
+            <a href=./attack class="active">Attack</a>
+            <a href=./settings>Settings</a>
+            <a href=./info class="right">System Info</a>
+        </div>
+    </nav>
+    <div id=notification></div>
+    <div id=spinner-container></div>
+    <div class=main-wrap>
+        <div class=container>
+            <div class=card-container>
+                <div class=card>
+                    <div class="card-title">
+                        Initiate Attack
+                    </div>
+                    <div class="card-content">
+                        <table id=attackMode></table>
+                    </div>
+                </div>
+                <hr>
+            </div>
+            <div class="card-container dn" id=selectedNetworksDevices>
+                <div class=card>
+                    <div class="card-title">
+                        Selected Networks
+                    </div>
+                    <div class="card-content">
+                        <table id=selectedAPs></table>
+                    </div>
+                </div>
+                <div class=card>
+                    <div class="card-title">
+                        Selected Users
+                    </div>
+                    <div class="card-content">
+                        <table id=selectedClients class=dn></table>
+                    </div>
+                </div>
+                <hr>
+            </div>
+            <div class=card-container id=section2>
+                <div class=card>
+                    <div class=card-title>
+                        Add Beaconing SSID
+                    </div>
+                    <div class=card-content>
+                        <div class="inputCheckbox row">
+                            <div class=col-6>
+                                <div class=input-container id=ssidContainer>
+                                    <input id=ssid placeholder=" " required minlength=1 maxlength=32>
+                                    <label for=ssid>SSID</label>
+                                </div>
+                            </div>
+                            <div class=col-6>
+                                <label for=randSSID class=checkboxContainer>
+                                    <input id=randSSID type=checkbox value=false name=randSSID>
+                                    <label for=randSSID class=checkbox></label>
+                                    Generate random SSID
+                                </label>
+                            </div>
+                        </div>
+                        <div class="inputCheckbox row">
+                            <div class=col-6>
+                                <div class=input-container>
+                                    <input id=num type=number value=48 max=48 min=0 placeholder=" " required>
+                                    <label for=num>Number of clones</label>
+                                </div>
+                            </div>
+                            <div class=col-6>
+                                <label for=enc class=checkboxContainer>
+                                    <input id=enc type=checkbox value=false name=enc>
+                                    <label for=enc class=checkbox></label>
+                                    Encrypted SSID
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=card-action>
+                        <a class="button right" onclick=addSSID()>Add SSID</a>
+                    </div>
+                </div>
+            </div>
+            <div class=card-container>
+                <div class=card>
+                    <div class=card-title>
+                        Saved SSIDs
+                        <span id=ssidCounter>0 / 48</span>
+                    </div>
+                    <div class="card-content">
+                        <table id=savedSSID></table>
+                    </div>
+                    <div class=card-action>
+                        <a class=button onclick=resetSSID()>reset</a>
+                        <a onclick='clearSSID()' class='button'>clear</a>
+                        <a class="button right" onclick=saveSSID()>save</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer></footer>
+        <script src=./js/functions.js></script>
+        <script src=./js/attack.js></script>
+    </div>
+</body>

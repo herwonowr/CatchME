@@ -1,0 +1,110 @@
+<head>
+    <title>CatchME - Users Station</title>
+    <meta content="width=device-width,initial-scale=1,user-scalable=0" name=viewport>
+    <link href=./main.css rel=stylesheet>
+</head>
+
+<body>
+    <nav id=nav>
+        <div class="main-header">
+            <div class="main-logo">
+                <div id="logo-img"></div>
+                CatchME
+            </div>
+            <div class="main-info">
+                <section class="left">
+                    <span>Uptime:
+                        <b id=hUptime></b>
+                    </span>
+                    <span>Chip ID:
+                        <b id=hChipid></b>
+                    </span>
+                </section>
+                <section class="left">
+                    <span>Boot Version:
+                        <b id=hBootmode></b>
+                        <b id=hBootversion></b>
+                    </span>
+                    <span>SDK Version:
+                        <b id=hSdkversion></b>
+                    </span>
+                </section>
+            </div>
+            <div class="onoffswitch">
+                <input type="checkbox" name="catchme-mode" class="onoffswitch-checkbox" id="catchme-mode">
+                <label class="onoffswitch-label" for="catchme-mode">
+                    <span class="onoffswitch-inner"></span>
+                    <span class="onoffswitch-switch"></span>
+                </label>
+            </div>
+        </div>
+        <div id=links>
+            <a href=.>Networks</a>
+            <a href=./users class="active">Users</a>
+            <a href=./attack>Attack</a>
+            <a href=./settings>Settings</a>
+            <a href=./info class="right">System Info</a>
+        </div>
+    </nav>
+    <div id=notification></div>
+    <div id=spinner-container></div>
+    <div class=main-wrap>
+        <div class=container>
+            <div class=card-container>
+
+                <div class=card>
+                    <div class="card-title">
+                        <div class="button-header" style="display:inline-block;">
+                            Users Found &nbsp;
+                            <span id=clientsFound></span>
+                        </div>
+                        <button class="right button-header button-primary" id=startScan onclick=scan()>Scan User</button>
+                    </div>
+                    <div class="card-content">
+                        <table id=users></table>
+                    </div>
+                    <div class=card-action>
+                        <a class="right button" onclick='window.location="./attack.html"'>Attack</a>
+                    </div>
+                </div>
+                <hr>
+                <div class="dn" id=saved-users>
+                    <div class="card-title">
+                        <div class="button-header" style="display:inline-block;">
+                            Saved Users &nbsp;
+                            <span id=clientNames></span>
+                        </div>
+                    </div>
+                    <div class="card-content">
+                        <table id=nameList></table>
+                    </div>
+                    <div class=card-action>
+                        <a onclick="clearNameList()" class="button secondary right">Clear Users</a>
+                    </div>
+                </div>
+                <hr>
+                <div class=card>
+                    <div class=card-content>
+                        <div class="row ta-c">
+                            <div class="input-container col-5">
+                                <input id=cMac placeholder=" " required max=17 min=17>
+                                <label for=cMac>MAC Address</label>
+                            </div>
+                            <div class="input-container col-1"></div>
+                            <div class="input-container col-5">
+                                <input id=cName placeholder=" " required>
+                                <label for=cName>Name</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=card-action>
+                        <a class="right button" onclick=addClient()>add user</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer></footer>
+        <script src=./js/functions.js></script>
+        <script src=./js/users.js></script>
+    </div>
+</body>

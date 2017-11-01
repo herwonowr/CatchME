@@ -1,0 +1,15 @@
+{
+    "freememory":"11016",
+    "deauthpackets":"0",
+    "beaconpackets":"0",
+    "uptime":"178196",
+    "ipaddress":"0.0.0.0",
+    "gateway":"0.0.0.0",
+    "bootmode":"1",
+    "bootversion":"5",
+    "sdkversion":"1.5.3(aec24ac9)",
+    "chipid":"1715836",
+    "flashchipid":"1458415",
+    "flashchipsize":"4194304",
+    "flashchiprealsize":"4194304"
+ }

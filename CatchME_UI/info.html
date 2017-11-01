@@ -1,0 +1,236 @@
+<head>
+    <title>CatchME - System Informations</title>
+    <meta content="width=device-width,initial-scale=1,user-scalable=0" name=viewport>
+    <link href=./main.css rel=stylesheet>
+</head>
+
+<body>
+    <nav id=nav>
+        <div class="main-header">
+            <div class="main-logo">
+                <div id="logo-img"></div>
+                CatchME
+            </div>
+            <div class="main-info">
+                <section class="left">
+                    <span>Uptime:
+                        <b id=hUptime></b>
+                    </span>
+                    <span>Chip ID:
+                        <b id=hChipid></b>
+                    </span>
+                </section>
+                <section class="left">
+                    <span>Boot Version:
+                        <b id=hBootmode></b>
+                        <b id=hBootversion></b>
+                    </span>
+                    <span>SDK Version:
+                        <b id=hSdkversion></b>
+                    </span>
+                </section>
+            </div>
+            <div class="onoffswitch">
+                <input type="checkbox" name="catchme-mode" class="onoffswitch-checkbox" id="catchme-mode">
+                <label class="onoffswitch-label" for="catchme-mode">
+                    <span class="onoffswitch-inner"></span>
+                    <span class="onoffswitch-switch"></span>
+                </label>
+            </div>
+        </div>
+        <div id=links>
+            <a href=.>Networks</a>
+            <a href=./users>Users</a>
+            <a href=./attack>Attack</a>
+            <a href=./settings>Settings</a>
+            <a href=./info class="right active">System Info</a>
+        </div>
+    </nav>
+    <div id=notification></div>
+    <div id=spinner-container></div>
+    <div class=main-wrap>
+        <div class=container>
+            <div class=card-container>
+                <div class=card>
+                    <div class="card-title">
+                        OTA Update
+                    </div>
+                    <div class=card-content>
+                        <table>
+                            <form enctype=multipart/form-data id=ota>
+                                <tr>
+                                    <td>
+                                        <input accept=.bin id=update name=update type=file>
+                                        <label class="button secondary no-caps" for=update tabindex=0></label>
+                                    </td>
+                                    <td>
+                                        <button class="secondary onlgr" onclick=checkUpdate()>Check for updates</button>
+                                    </td>
+                                </tr>
+                            </form>
+                            <br>
+                        </table>
+                    </div>
+
+                    <div class=card-action>
+                        <button class="right secondary" onclick='updateFirmware()'>update</button>
+                    </div>
+                </div>
+            </div>
+            <div class=card-container>
+                <div class=card>
+                    <div class="card-title">
+                        System Informations
+                    </div>
+                    <div class="card-content">
+                        <table>
+                            <tr>
+                                <td class="selected b">CathME Version</td>
+                                <td>v.
+                                    <span id=version></span>
+                                </td>
+                                <td class="selected b">Uptime</td>
+                                <td>
+                                    <span id=uptime></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="selected b">Boot Version</td>
+                                <td>v.
+                                    <span id=bootversion></span>-m.
+                                    <span id=bootmode></span>
+                                </td>
+                                <td class="selected b">Free Memory</td>
+                                <td>
+                                    <span id=freememory></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="selected b">SDK Version</td>
+                                <td>
+                                    <span id=sdk></span>
+                                </td>
+                                <td class="selected b">Flash Size</td>
+                                <td>
+                                    <span id=flashsize></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="selected b">Chip ID</td>
+                                <td>
+                                    <span id=chipid></span>
+                                </td>
+                                <td class="selected b">Send Deauth Packages</td>
+                                <td>
+                                    <span id=deauthpackets></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="selected b">Flash ID</td>
+                                <td>
+                                    <span id=flashid></span>
+                                </td>
+                                <td class="selected b">Send Beacon Packages</td>
+                                <td>
+                                    <span id=beaconpackets></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="selected b">IP Adress</td>
+                                <td>
+                                    <span id=ipaddress></span>
+                                </td>
+                                <td class="selected b">Gateway</td>
+                                <td>
+                                    <span id=gateway></span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class=card-container id=credits>
+                <div class=card>
+                    <div class="card-title">
+                        About
+                    </div>
+                    <div class=card-content>
+                        <div class="row">
+                            <div class="col-8 about">
+                                <h3>CatchME</h3>
+                                <p>
+                                    <b>CatchME</b> is developed by (Herwono W. Wijaya)
+                                    <a href="https://twitter.com/HerwonoWr">@HerwonoWr</a>. This project is a proof of concept for testing and educational purposes.
+                                    CatchME allows you to perform deauth attack, beacon, probe request flooding, and WiFi
+                                    sniffing. CatchME (deauth attack) works by exploiting an old and known (deauth attack)
+                                    vulnerability in the 802.11 WiFi protocol. CatchME also allows you to detect Deauth Attack.
+                                    CatchME has two operation mode, Attack Mode and Detector Mode, Detector Mode allows you
+                                    to detect Deauth Attack.
+                                    <br><br>
+                                    <b>CatchME</b> is based upon the awesome work of (Stefan Kremser) <a href=https://github.com/spacehuhn/esp8266_deauther>esp8266 Deauther</a> & (Sam Denty) <a href=https://github.com/samdenty99/Wi-PWN>Wi-PWN</a>
+                                </p>
+                                <br>
+                                <p>
+                                    <b>WARNING</b>
+                                    <br> Use it only against your own networks and devices!. I don't take any responsibility
+                                    for what you do with CatchME.
+                                    <br>
+                                    <br> Please check the legal regulations in your country before using it. Do not redistribute,
+                                    advertise or sell of this software as "jammer"!.
+                                </p>
+                            </div>
+                            <div class="col-4">
+                                <h3>Credits</h3>
+                                <a href=https://github.com/spacehuhn/esp8266_deauther>@spacehuhn</a>
+                                (Stefan Kremser)
+                                <br>
+                                <a href=https://github.com/samdenty99 target=_blank>@samdenty99</a>
+                                (Sam Denty)
+                                <br>
+                                <a href=https://github.com/N0vaPixel target=_blank>@N0vaPixel</a>
+                                (Aur &eacute;lien Hernandez)
+                                <br>
+                                <a href=https://github.com/SaltyViper target=_blank>@SaltyViper</a>
+                                (SaltyViper)
+                                <br>
+                                <a href=https://github.com/tobozo target=_blank>@tobozo</a>
+                                (Tobozo)
+                                <br>
+                                <a href=https://github.com/LarzJ target=_blank>@LarzJ</a>
+                                (Larz Jacobs)
+                                <br>
+                                <a href=https://github.com/StijnSimons target=_blank>@StijnSimons</a>
+                                (Stimons)
+                                <br>
+                                <a href=https://github.com/andrbmgi target=_blank>@andrbmgi</a>
+                                (Andrbmgi)
+                                <br>
+                                <a href=https://github.com/SamuelKlit target=_blank>@SamuelKlit</a>
+                                (Samuel KS)
+                                <br>
+                                <a href=https://github.com/schinfo target=_blank>@schinfo</a>
+                                (Helmut)
+                                <br>
+                                <a href=https://github.com/ericktedeschi target=_blank>@ericktedeschi</a>
+                                (Erick Belluci Tedeschi)
+                                <br>
+                                <a href=https://github.com/ajnavarro target=_blank>@ajnavarro</a>
+                                (Antonio Navarro Perez)
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-action">
+                        <center>
+                            This project is based upon the awesome work of
+                            <b>Stefan Kremser (Spacehuhn)</b>
+                        </center>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer></footer>
+        <script src=./js/functions.js></script>
+        <script src=./js/info.js></script>
+    </div>
+</body>

@@ -1,0 +1,306 @@
+<head>
+    <title>CatchME - Settings</title>
+    <meta content="width=device-width,initial-scale=1,user-scalable=0" name=viewport>
+    <link href=./main.css rel=stylesheet>
+</head>
+
+<body>
+    <nav id=nav>
+        <div class="main-header">
+            <div class="main-logo">
+                <div id="logo-img"></div>
+                CatchME
+            </div>
+            <div class="main-info">
+                <section class="left">
+                    <span>Uptime:
+                        <b id=hUptime></b>
+                    </span>
+                    <span>Chip ID:
+                        <b id=hChipid></b>
+                    </span>
+                </section>
+                <section class="left">
+                    <span>Boot Version:
+                        <b id=hBootmode></b>
+                        <b id=hBootversion></b>
+                    </span>
+                    <span>SDK Version:
+                        <b id=hSdkversion></b>
+                    </span>
+                </section>
+            </div>
+            <div class="onoffswitch">
+                <input type="checkbox" name="catchme-mode" class="onoffswitch-checkbox" id="catchme-mode">
+                <label class="onoffswitch-label" for="catchme-mode">
+                    <span class="onoffswitch-inner"></span>
+                    <span class="onoffswitch-switch"></span>
+                </label>
+            </div>
+        </div>
+        <div id=links>
+            <a href=.>Networks</a>
+            <a href=./users>Users</a>
+            <a href=./attack>Attack</a>
+            <a href=./settings class="active">Settings</a>
+            <a href=./info class="right">System Info</a>
+        </div>
+    </nav>
+    <div id=notification></div>
+    <div id=spinner-container></div>
+    <div class=main-wrap>
+        <form class=container id=settings>
+            <div class=card-container>
+                <div class=card>
+                    <div class="card-title">
+                        WiFi Settings
+                    </div>
+                    <div class="card-content">
+                        <div class=row>
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class=col-12>
+                                        <div class=input-container>
+                                            <input id=ssid placeholder=" " required minlength=1 maxlength=32 autocorrect=off autocapitalize=none spellcheck=false>
+                                            <label for=ssid>SSID</label>
+                                        </div>
+                                    </div>
+                                    <div class=col-12>
+                                        <div class=input-container>
+                                            <input id=password placeholder=" " required minlength=8 maxlength=32 autocorrect=off autocapitalize=none spellcheck=false>
+                                            <label for=password>Password</label>
+                                        </div>
+                                    </div>
+                                    <div class=col-6>
+                                        <div class=input-container>
+                                            <input id=apChannel type=number max=14 min=1 placeholder=" " required>
+                                            <label for=apChannel>Channel</label>
+                                        </div>
+                                    </div>
+                                    <div class=col-6>
+                                        <label for=ssidHidden class="checkboxContainer invert">
+                                            <input id=ssidHidden type=checkbox name=ssidHidden value=false>
+                                            <label for=ssidHidden class=checkbox></label>
+                                            Hide SSID
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class=col-12>
+                                        <label for=wifiClient class="checkboxContainer invert">
+                                            <input id=wifiClient type=checkbox name=wifiClient value=false>
+                                            <label for=wifiClient class=checkbox></label>
+                                            Enable WiFi Client
+                                        </label>
+                                    </div>
+                                    <div class=input-container id=clientContainer>
+                                        <div class=col-12>
+                                            <br>
+                                            <div class=input-container>
+                                                <input id=ssidClient placeholder=" " required minlength=1 maxlength=32 autocorrect=off autocapitalize=none spellcheck=false>
+                                                <label for=ssidClient>SSID Client</label>
+                                            </div>
+                                        </div>
+                                        <div class=col-12>
+                                            <div class=input-container>
+                                                <input id=passwordClient placeholder=" " required minlength=8 maxlength=32 autocorrect=off autocapitalize=none spellcheck=false>
+                                                <label for=passwordClient>Client Password</label>
+                                            </div>
+                                        </div>
+                                        <div class=col-12>
+                                            <div class=input-container>
+                                                <input id=hostname placeholder=" " required minlength=1 maxlength=12 autocorrect=off autocapitalize=none spellcheck=false>
+                                                <label for=hostname>CatchME Hostname</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class=card-action>
+                        <button class="right secondary" onclick=saveSettings() type=button>save</button>
+                    </div>
+                </div>
+                <hr>
+            </div>
+
+            <div class=card-container>
+                <div class=card>
+                    <div class="card-title">
+                        Advanced Settings
+                    </div>
+                    <div class="card-content">
+                        <div class=row>
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class=col-12>
+                                        <div class=input-container>
+                                            <input id=scanTime type=number max=255 min=1 placeholder=" " required>
+                                            <label for=scanTime>Network Scan Timeout</label>
+                                        </div>
+                                    </div>
+                                    <div class=col-12>
+                                        <div class=input-container>
+                                            <input id=timeout type=number max=65536 min=-1 placeholder=" " required>
+                                            <label for=timeout>Attack Timeout</label>
+                                        </div>
+                                    </div>
+                                    <div class=col-12>
+                                        <div class=input-container>
+                                            <input id=deauthReason type=number max=45 min=1 placeholder=" " required>
+                                            <label for=deauthReason>Deauth reason-code</label>
+                                        </div>
+                                    </div>
+                                    <div class=col-12>
+                                        <div class=input-container>
+                                            <input id=packetRate type=number max=300 min=1 placeholder=" " required>
+                                            <label for=packetRate>Packet rate (pkts/s)</label>
+                                        </div>
+                                    </div>
+                                    <div class=col-12>
+                                        <div class=input-container>
+                                            <input id=macInterval type=number max=65000 min=0 placeholder=" " required>
+                                            <label for=packetRate>MAC Change Interval</label>
+                                        </div>
+                                    </div>
+                                    <div class=col-12>
+                                        <div class=input-container id=macContainer>
+                                            <input id=macAp placeholder=" " required minlength=1 maxlength=17 autocorrect=off autocapitalize=none spellcheck=false>
+                                            <label for=macAp>MAC address</label>
+                                        </div>
+                                    </div>
+                                    <div class=col-12>
+                                        <label for=randMacAp class=checkboxContainer>
+                                            Random MAC address
+                                            <input id=randMacAp type=checkbox name=randMacAp value=false>
+                                            <label for=randMacAp class=checkbox></label>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class=col-12>
+                                        <label for=useLed class="checkboxContainer invert">
+                                            <input id=useLed type=checkbox name=useLed value=false>
+                                            <label for=useLed class=checkbox></label>
+                                            Enable Attack Mode LED Indicator
+                                        </label>
+                                    </div>
+                                    <div class=col-12>
+                                        <div class=input-container id=ledContainer>
+                                            <input id=ledPin type=number max=18 min=0 placeholder=" " required>
+                                            <label for=ledPin>LED Pin</label>
+                                            <span style="font-size:0.7rem;color:rgba(255, 255, 255,.28)">LED is used for Attack Mode indicator *</span>
+                                        </div>
+                                    </div>
+                                    <div class=col-12>
+                                        <label for=useAlertLed class="checkboxContainer invert">
+                                            <input id=useAlertLed type=checkbox name=useAlertLed value=false>
+                                            <label for=useAlertLed class=checkbox></label>
+                                            Enable Detector Mode LED Indicator
+                                        </label>
+                                    </div>
+                                    <div class=col-12>
+                                        <div class=input-container id=alertLedContainer>
+                                            <input id=alertLedPin type=number max=18 min=0 placeholder=" " required>
+                                            <label for=alertLedPin>LED Pin</label>
+                                            <span style="font-size:0.7rem;color:rgba(255, 255, 255,.28)">LED is used for alert Detector Mode indicator *</span>
+                                        </div>
+                                    </div>
+                                    <div class=col-12>
+                                        <label for=cache class="checkboxContainer invert">
+                                            <input id=cache type=checkbox name=cache value=false>
+                                            <label for=cache class=checkbox></label>
+                                            Enable Server Caching
+                                        </label>
+                                    </div>
+                                    <div class=col-12>
+                                        <div class=input-container id=cacheContainer>
+                                            <input id=serverCache type=number max=9999 min=0 placeholder=" " required>
+                                            <label for=serverCache>Cache expiration time</label>
+                                        </div>
+                                    </div>
+                                    <div class=col-12>
+                                        <label for=apScanHidden class=checkboxContainer>
+                                            Scan for hidden networks
+                                            <input id=apScanHidden type=checkbox name=apScanHidden
+                                                value=false>
+                                            <label for=apScanHidden class=checkbox></label>
+                                        </label>
+                                    </div>
+                                    <div class=col-12>
+                                        <label for=multiAPs class=checkboxContainer>
+                                            Select multiple networks
+                                            <input id=multiAPs type=checkbox name=multiAPs value=false>
+                                            <label for=multiAPs class=checkbox></label>
+                                        </label>
+                                    </div>
+                                    <div class=col-12>
+                                        <label for=multiAttacks class=checkboxContainer>
+                                            Simultaneous attacks
+                                            <input id=multiAttacks type=checkbox name=multiAttacks value=false>
+                                            <label for=multiAttacks class=checkbox></label>
+                                        </label>
+                                    </div>
+                                    <div class=col-12>
+                                        <label for=beaconInterval class=checkboxContainer>
+                                            1s Beacon interval
+                                            <input id=beaconInterval type=checkbox name=beaconInterval
+                                                value=false>
+                                            <label for=beaconInterval class=checkbox></label>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class=card-action>
+                        <button class="right secondary" onclick=saveSettings() type=button>save</button>
+                    </div>
+                </div>
+                <hr>
+            </div>
+            <div class=card-container>
+                <div class=card>
+                    <div class="card-content">
+                        <table>
+                            <tr>
+                                <td>Reset Saved SSIDs</td>
+                                <td onclick='getResponse("resetSSID.json",function(){notify("Request sent!")})'>
+                                    <button class=secondary>reset</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Clear Saved SSIDs</td>
+                                <td onclick='getResponse("clearSSID.json",function(){notify("Request sent!")})'>
+                                    <button class=secondary>clear</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Clear Saved Users</td>
+                                <td onclick='getResponse("clearNameList.json",function(){notify("Request sent!")})'>
+                                    <button class=secondary>clear</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class=card-action>
+                        <button class="button-primary right" onclick=resetSettings() type=button>reset all settings</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <footer></footer>
+        <script src=./js/functions.js></script>
+        <script src=./js/settings.js></script>
+    </div>
+</body>

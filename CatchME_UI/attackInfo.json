@@ -1,0 +1,1 @@
+{"aps":["Tebet2C"],"clients":["8c:8e:f2:19:a0:6a Apple - ","34:a3:95:28:ab:33 Apple - ","60:f4:45:70:88:b2 Apple - ","60:03:08:99:f5:34 Apple - "],"attacks":[{"name":"Deauth","status":"ready","running":0},{"name":"Beacon","status":"ready","running":0},{"name":"Probe-Request","status":"ready","running":0}],"randomMode":0}

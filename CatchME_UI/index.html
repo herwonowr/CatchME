@@ -1,0 +1,77 @@
+<head>
+    <title>CatchME - Networks Scan</title>
+    <meta content="width=device-width,initial-scale=1,user-scalable=0" name=viewport>
+    <link href=./main.css rel=stylesheet>
+</head>
+
+<body>
+    <nav id=nav>
+        <div class="main-header">
+            <div class="main-logo">
+                <div id="logo-img"></div>
+                CatchME
+            </div>
+            <div class="main-info">
+                <section class="left">
+                    <span>Uptime:
+                        <b id=hUptime></b>
+                    </span>
+                    <span>Chip ID:
+                        <b id=hChipid></b>
+                    </span>
+                </section>
+                <section class="left">
+                    <span>Boot Version:
+                        <b id=hBootmode></b>
+                        <b id=hBootversion></b>
+                    </span>
+                    <span>SDK Version:
+                        <b id=hSdkversion></b>
+                    </span>
+                </section>
+            </div>
+            <div class="onoffswitch">
+                <input type="checkbox" name="catchme-mode" class="onoffswitch-checkbox" id="catchme-mode">
+                <label class="onoffswitch-label" for="catchme-mode">
+                    <span class="onoffswitch-inner"></span>
+                    <span class="onoffswitch-switch"></span>
+                </label>
+            </div>
+        </div>
+        <div id=links>
+            <a href=. class="active" />Networks</a>
+            <a href=./users>Users</a>
+            <a href=./attack>Attack</a>
+            <a href=./settings>Settings</a>
+            <a href=./info class="right">System Info</a>
+        </div>
+    </nav>
+    <div id=notification></div>
+    <div id=spinner-container></div>
+    <div class=main-wrap>
+        <div class=container>
+            <div class=card-container>
+                <div class=card>
+                    <div class="card-title">
+                        <div class="button-header" style="display:inline-block;">
+                            Networks Found &nbsp;
+                            <span id=networksFound></span>
+                        </div>
+                        <button class="right button-header button-primary" id=apScanStart onclick=scan()>Scan Network</button>
+                    </div>
+                    <div class="card-content">
+                        <table id=apscan></table>
+                    </div>
+
+                    <div class=card-action>
+                        <a class="button" onclick='window.location="./users.html"'>Select Users</a>
+                        <a class="right button" onclick='window.location="./attack.html"'>Attack Networks</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer></footer>
+    </div>
+    <script src=./js/functions.js></script>
+    <script src=./js/scan.js></script>
+</body>

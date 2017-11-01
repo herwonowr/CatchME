@@ -1,0 +1,245 @@
+<head>
+    <title>CatchME - Detector Mode</title>
+    <meta content="width=device-width,initial-scale=1,user-scalable=0" name=viewport>
+    <link href=./main.css rel=stylesheet>
+</head>
+
+<body>
+    <nav id=nav>
+        <div class="main-header">
+            <div class="main-logo">
+                <div id="logo-img"></div>
+                CatchME
+            </div>
+            <div class="main-info">
+                <section class="left">
+                    <span>Uptime:
+                        <b id=hUptime></b>
+                    </span>
+                    <span>Chip ID:
+                        <b id=hChipid></b>
+                    </span>
+                </section>
+                <section class="left">
+                    <span>Boot Version:
+                        <b id=hBootmode></b>
+                        <b id=hBootversion></b>
+                    </span>
+                    <span>SDK Version:
+                        <b id=hSdkversion></b>
+                    </span>
+                </section>
+            </div>
+            <div class="onoffswitch">
+                <input type="checkbox" name="catchme-mode" class="onoffswitch-checkbox" id="catchme-mode">
+                <label class="onoffswitch-label" for="catchme-mode">
+                    <span class="onoffswitch-inner"></span>
+                    <span class="onoffswitch-switch"></span>
+                </label>
+            </div>
+        </div>
+        <div id=links>
+            <a href=. class="active">Deauth Detector</a>
+            <a href=./sniffing>WiFi Sniffing</a>
+        </div>
+    </nav>
+    <div id=notification></div>
+    <div id=spinner-container></div>
+    <div class="main-wrap">
+        <div class="container">
+            <div class="card-container">
+                <div class="card">
+                    <div class="card-title">
+                        Detector Mode
+                    </div>
+                    <div class="card-content">
+                        <div class=row>
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <label for="detectorAllChannels" class="checkboxContainer invert">
+                                            <input type="checkbox" name="detectorAllChannels" id="detectorAllChannels" value="false" checked>
+                                            <label class="checkbox" for="detectorAllChannels"></label>
+                                            Detect All Channels
+                                        </label>
+                                    </div>
+                                    <div class="col-12">
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="input-container disabled" id="channelContainer">
+                                                    <input placeholder=" " id="detectorChannel" required="" type="number" min="1" max="14">
+                                                    <label for="detectorChannel">Detect Channel</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="input-container">
+                                                    <input placeholder=" " id="detectorScanTime" required="detectorScanTime" type="number" min="10">
+                                                    <label for="detectorScanTime">Channel scan time (ms)</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-6">
+                                <div class="row">
+                                    <div class=col-12>
+                                        <label for=useAlertLed class="checkboxContainer invert">
+                                            <input id=useAlertLed type=checkbox name=useAlertLed value=false>
+                                            <label for=useAlertLed class=checkbox></label>
+                                            Enable Detector Mode LED Indicator
+                                        </label>
+                                    </div>
+                                    <div class=col-12>
+                                        <div class=input-container id=alertLedContainer>
+                                            <input id=alertLedPin type=number max=18 min=0 placeholder=" " required>
+                                            <label for=alertLedPin>LED Pin</label>
+                                            <span style="font-size:0.7rem;color:rgba(255, 255, 255,.28)">LED is used for alert Detector Mode indicator *</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-action">
+                        <a class="button secondary" onclick="saveSettings()">save</a>
+                        <a class="button secondary right" onclick="saveSettings(true)">start</a>
+                    </div>
+                </div>
+                <hr>
+            </div>
+
+            <div class=card-container>
+                <div class=card>
+                    <div class="card-content detector-info">
+                        <div class=row>
+                            <div class="col-12">
+                                <p class="center">
+                                    <b>HOW IT WORKS</b>
+                                    <br>
+                                </p>
+                                <p>
+                                    Detector will detects if indicate high amounts of deauthentication or disassociation frames on selected channel or on all
+                                    channels. It can't protect from the attack, but it can help to figure out if and when
+                                    an attack is going on.
+                                    <br>
+                                    <br> - Detector LED indicator will blink in standby status.
+                                    <br> - Detector LED indicator will turn ON if DEAUTH attack detected.
+                                    <br>
+                                    <br>
+                                    <b>INFO</b>
+                                    <br> You are unable to use web management if Detector Mode is active, restart CatchME to
+                                    return to normal!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer></footer>
+        <script src="./js/functions.js"></script>
+        <script>
+            var allChannels = document.getElementById("detectorAllChannels"),
+                channel = document.getElementById("detectorChannel"),
+                scanTime = document.getElementById("detectorScanTime"),
+                alertLedPin = document.getElementById("alertLedPin"),
+                useAlertLed = document.getElementById("useAlertLed"),
+                saveStatus = getE('spinner-container'),
+                res;
+
+            getResponse("settings.json", function (responseText) {
+                try {
+                    res = JSON.parse(responseText);
+                } catch (e) {
+                    notify("ERROR: Load settings, Reset the settings!");
+                    return;
+                }
+
+                if (res.detectorAllChannels == 1) {
+                    allChannels.checked = true;
+                    switchChannel();
+                } else {
+                    allChannels.checked = false;
+                    switchChannel();
+                }
+
+                if (res.useAlertLed == 1) {
+                    useAlertLed.checked = true;
+                    switchAlertLED();
+                } else {
+                    useAlertLed.checked = false;
+                    switchAlertLED();
+                }
+                channel.value = res.detectorChannel;
+                scanTime.value = res.detectorScanTime;
+                alertLedPin.value = res.alertLedPin;
+            });
+
+            allChannels.addEventListener("change", switchChannel, false);
+            useAlertLed.addEventListener("change", switchAlertLED, false);
+
+            function switchChannel() {
+                if (allChannels.checked) {
+                    channelContainer.classList.add("disabled");
+                } else {
+                    channelContainer.classList.remove("disabled");
+                }
+            }
+
+            function switchAlertLED() {
+                if (useAlertLed.checked) {
+                    alertLedContainer.classList.remove("disabled");
+                } else {
+                    alertLedContainer.classList.add("disabled");
+                }
+            }
+
+            function saveSettings(run) {
+                saveStatus.className = "";
+                showLoading();
+                var url = "settingsSave.json";
+                url += "?detectorAllChannels=" + allChannels.checked;
+                url += "&detectorChannel=" + channel.value;
+                url += "&detectorScanTime=" + scanTime.value;
+                url += "&useAlertLed=" + useAlertLed.checked;
+                url += "&alertLedPin=" + alertLedPin.value;
+
+                getResponse(url, function (responseText) {
+                    if (responseText == "true") {
+                        if (run == true) {
+                            getResponse("detectorStart.json", function (responseText) {
+                                if (responseText == "true") {
+                                    showLoading("hide");
+                                    indicate(true)
+                                    notify("Detector running! Restart device to return to normal");
+                                    var card = document.getElementsByClassName("card-content")[0];
+                                    card.className = "card-content disabled"
+                                } else {
+                                    notify("ERROR: Failed to start detector!");
+                                    indicate()
+                                }
+                            }, function () {
+                                notify("ERROR: Failed to start detector!");
+                                indicate()
+                            });
+                        } else {
+                            indicate(true);
+                            saveStatus.classList.add("success-save");
+                        }
+                    } else {
+                        if (run == false) saveStatus.classList.add("failed-save");
+                        notify("ERROR: Failed to save!");
+                        indicate()
+                    }
+                }, function () {
+                    if (run == false) saveStatus.classList.add("failed-save");
+                    notify("ERROR: Failed to save!");
+                    indicate()
+                });
+            }
+            fadeIn();
+        </script>
+    </div>
+</body>
